@@ -1,11 +1,14 @@
 package br.inatel.projeto.control;
+
 import br.inatel.projeto.model.Cliente;
+import br.inatel.projeto.model.Produto;
+import br.inatel.projeto.model.SAC;
 import br.inatel.projeto.model.Unidade;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DatabaseUnidade {
+public class DatabaseProduto {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
     ResultSet result; // objeto responsável por executar consultas "SELECT"
@@ -27,23 +30,24 @@ public class DatabaseUnidade {
             System.out.println("Erro de conexão: " + e.getMessage());
         }
     }
-    //--------------------BUSCANDO NOVO REGISTRO--------------------
-    public ArrayList<Unidade> researchUnidade(Cliente cliente){
+    //buscando o SAC ligado a loja
+    public ArrayList<Produto> researchProduto(Unidade unidade){
         connect();
-        ArrayList<Unidade> unidades = new ArrayList<Unidade>();
-        String sql = "SELECT U.* FROM Unidade AS U INNER JOIN Cliente_has_Unidade AS CU WHERE U.idUnidade = CU.Unidade_idUnidade AND CU.Cliente_CPF = '"+cliente.getCPF()+"'";
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        String sql = "SELECT * FROM Produto WHERE Unidade_idUnidade='"+unidade.getIdUnidade()+"'";
 
         try{
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
 
             while(result.next()){
-                Unidade unidade = new Unidade(result.getInt("idUnidade"), result.getString("localizacao"), result.getBoolean("taxa"));
-                System.out.println("Id = " + unidade.getIdUnidade());
-                System.out.println("Localizacao = " + unidade.getLocalizacao());
-                System.out.println("Possui taxa = " + unidade.isTaxa());
+                Produto prodTemp = new Produto(result.getInt("codigoProduto"), result.getInt("Unidade_idUnidade"), result.getString("nome"),result.getFloat("valor"), result.getString("descricao"), result.getInt("quantidade"));
+                System.out.println("Nome = " + prodTemp.getNome());
+                System.out.println("Descricao = " + prodTemp.getDescricao());
+                System.out.println("Preco = " + prodTemp.getValor());
+                System.out.println("Id unidade = "+prodTemp.getUnidade_idUnidade());
                 System.out.println("---------------------------------");
-                unidades.add(unidade);
+                produtos.add(prodTemp);
             }
         }catch(SQLException e){
             System.out.println("Erro de operação: " + e.getMessage());
@@ -57,34 +61,32 @@ public class DatabaseUnidade {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        return unidades;
+        return produtos;
     }
-    public int researchUnidadeID(String localizacao){
-        connect();
-        int ID = 0;
-        String sql = "SELECT idUnidade FROM Unidade WHERE Localizacao ='"+localizacao+"'";
 
-        try{
-            statement = connection.createStatement();
-            result = statement.executeQuery(sql);
+    public boolean updateCarrinho(ArrayList<Produto> carrinho) {
+        for (Produto produto : carrinho) {
+            connect();
+            String sql = "UPDATE Produto SET Quantidade=Quantidade-? WHERE CodigoProduto=?";
 
-            while(result.next()){
-                ID = result.getInt("idUnidade");
-                System.out.println("Id = " + ID);
-                System.out.println("---------------------------------");
-            }
-        }catch(SQLException e){
-            System.out.println("Erro de operação: " + e.getMessage());
-        }
-        finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
+            try {
+                pst = connection.prepareStatement(sql);
+                pst.setInt(1, produto.getQuantidade());
+                pst.setInt(2, produto.getCodigoProduto());
+                pst.execute();
+                check = true;
+            } catch (SQLException e) {
+                System.out.println("Erro de conexão: " + e.getMessage());
+                check = false;
+            } finally {
+                try {
+                    connection.close();
+                    pst.close();
+                } catch (SQLException e) {
+                    System.out.println("Erro ao fechar conexão: " + e.getMessage());
+                }
             }
         }
-        return ID;
+        return check;
     }
 }

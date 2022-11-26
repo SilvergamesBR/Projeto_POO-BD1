@@ -64,4 +64,14 @@ public class Produto {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    @Override
+    public String toString(){
+        if(descricao != null) {
+            return nome + ": " + descricao;
+        }else{
+            return nome;
+        }
+    }
+
 }

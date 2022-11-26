@@ -1,11 +1,13 @@
 package br.inatel.projeto.control;
+
 import br.inatel.projeto.model.Cliente;
+import br.inatel.projeto.model.SAC;
 import br.inatel.projeto.model.Unidade;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DatabaseUnidade {
+public class DatabaseSAC {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
     ResultSet result; // objeto responsável por executar consultas "SELECT"
@@ -27,50 +29,20 @@ public class DatabaseUnidade {
             System.out.println("Erro de conexão: " + e.getMessage());
         }
     }
-    //--------------------BUSCANDO NOVO REGISTRO--------------------
-    public ArrayList<Unidade> researchUnidade(Cliente cliente){
+    //buscando o SAC ligado a loja
+    public SAC researchSAC(Unidade unidade){
         connect();
-        ArrayList<Unidade> unidades = new ArrayList<Unidade>();
-        String sql = "SELECT U.* FROM Unidade AS U INNER JOIN Cliente_has_Unidade AS CU WHERE U.idUnidade = CU.Unidade_idUnidade AND CU.Cliente_CPF = '"+cliente.getCPF()+"'";
+        SAC sac = null;
+        String sql = "SELECT * FROM SAC WHERE Unidade_idUnidade='"+unidade.getIdUnidade()+"'";
 
         try{
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
 
             while(result.next()){
-                Unidade unidade = new Unidade(result.getInt("idUnidade"), result.getString("localizacao"), result.getBoolean("taxa"));
-                System.out.println("Id = " + unidade.getIdUnidade());
-                System.out.println("Localizacao = " + unidade.getLocalizacao());
-                System.out.println("Possui taxa = " + unidade.isTaxa());
-                System.out.println("---------------------------------");
-                unidades.add(unidade);
-            }
-        }catch(SQLException e){
-            System.out.println("Erro de operação: " + e.getMessage());
-        }
-        finally {
-            try{
-                connection.close();
-                statement.close();
-                result.close();
-            } catch (SQLException e){
-                System.out.println("Erro ao fechar conexão: " + e.getMessage());
-            }
-        }
-        return unidades;
-    }
-    public int researchUnidadeID(String localizacao){
-        connect();
-        int ID = 0;
-        String sql = "SELECT idUnidade FROM Unidade WHERE Localizacao ='"+localizacao+"'";
-
-        try{
-            statement = connection.createStatement();
-            result = statement.executeQuery(sql);
-
-            while(result.next()){
-                ID = result.getInt("idUnidade");
-                System.out.println("Id = " + ID);
+                sac = new SAC(result.getInt("Unidade_idUnidade"), result.getInt("idSAC"), result.getString("Telefone"),result.getString("Email"));
+                System.out.println("Email = " + sac.getEmail());
+                System.out.println("Telefone = " + sac.getTelefone());
                 System.out.println("---------------------------------");
             }
         }catch(SQLException e){
@@ -85,6 +57,6 @@ public class DatabaseUnidade {
                 System.out.println("Erro ao fechar conexão: " + e.getMessage());
             }
         }
-        return ID;
+        return sac;
     }
 }
