@@ -3,7 +3,6 @@ package br.inatel.projeto.control;
 import br.inatel.projeto.model.Cliente;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseCliente {
     Connection connection; // objeto responsável por fazer a conexão com mysql
@@ -29,7 +28,7 @@ public class DatabaseCliente {
     }
 
     //--------------------INSERINDO NOVO REGISTRO--------------------
-    public boolean insertUser(Cliente cliente){
+    public boolean insertCliente(Cliente cliente){
         connect();
         String sql = "INSERT INTO Cliente(CPF,Nome,Genero,Senha) VALUES (?,?,?,?)";
         try{
@@ -87,7 +86,7 @@ public class DatabaseCliente {
         return cliente;
     }
 
-    //--------------------ATUALIZANDO NOME DO REGISTRO--------------------
+    //--------------------ATUALIZANDO SENHA DO REGISTRO--------------------
     public boolean updateCliente(Cliente cliente,String senha){
         connect();
         String sql = "UPDATE Cliente SET Senha=? WHERE CPF=?";
