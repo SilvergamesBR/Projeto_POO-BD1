@@ -107,7 +107,6 @@ insert into Unidade(idUnidade,Localizacao,Taxa) values (2,'Pouso Alegre,MG',true
 insert into Unidade(idUnidade,Localizacao,Taxa) values (3,'Rio de Janeiro,RJ',false);
 insert into Unidade(idUnidade,Localizacao,Taxa) values (4,'Juiz de Fora,MG',false);
 
-select U.Localizacao,P.Nome,P.Descricao from Produto as P inner join Unidade as U where P.Unidade_idUnidade = U.idUnidade;
 
 insert into Produto(CodigoProduto,Unidade_idUnidade,Nome,Valor,Descricao,Quantidade) values (1,1,'Mouse gamer',400,'Mouse Logitech G403 Hero',50);
 insert into Produto(CodigoProduto,Unidade_idUnidade,Nome,Valor,Quantidade) values (2,1,'Monitor tubao',135,10);
@@ -118,12 +117,12 @@ insert into Produto(CodigoProduto,Unidade_idUnidade,Nome,Valor,Quantidade) value
 insert into Produto(CodigoProduto,Unidade_idUnidade,Nome,Valor,Descricao,Quantidade) values (7,4,'Luzinha RGB',10,'Luzinhas para deixar seu quarto gamer bem colorido',250);
 insert into Produto(CodigoProduto,Unidade_idUnidade,Nome,Valor,Descricao,Quantidade) values (8,4,'PC da casas bahia',2600,'Seu netinho vai adorar esse presente de natal com um intel pentium de ultima geracao e incriveis 2 gb de memoria DDR2',50);
 
-select S.Telefone,S.Email,U.Localizacao from Unidade as U inner join SAC as S where S.Unidade_idUnidade = U.idUnidade;
 
 insert into SAC(Unidade_idUnidade,IdSAC,Telefone,Email) values (1,1,'(11) 1111-1111','SACSP@lojasluardo.com');
 insert into SAC(Unidade_idUnidade,IdSAC,Telefone,Email) values (2,2,'(35) 3535-3535','SACPA@lojasluardo.com');
 insert into SAC(Unidade_idUnidade,IdSAC,Telefone,Email) values (3,3,'(21) 2121-2121','SACRJ@lojasluardo.com');
 insert into SAC(Unidade_idUnidade,IdSAC,Telefone,Email) values (4,4,'(32) 3232-3232','SACSP@lojasluardo.com');
+
 
 
 
