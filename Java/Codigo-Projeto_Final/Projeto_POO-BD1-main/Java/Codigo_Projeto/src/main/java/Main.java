@@ -38,9 +38,8 @@ public class Main {
         } else {
             cliente = new Cliente(PedeCoisas.PedeNome(), PedeCoisas.PedeCPF(), PedeCoisas.PedeGenero(), PedeCoisas.PedeSenha());
             ClienteDB.insertCliente(cliente);
-            String nomeUnid = PedeCoisas.PedeUnidade(unidadesAcessiveis);
+            String nomeUnid = PedeCoisas.PedeUnidade(null);
             ConectDB.insertCliente_Has_Unidade(cliente, UnidadeDB.researchUnidadeID(nomeUnid));
-            unidadesAcessiveis = UnidadeDB.researchUnidade(cliente);
         }
         unidadesAcessiveis = UnidadeDB.researchUnidade(cliente);
 
@@ -48,7 +47,6 @@ public class Main {
         while (auxPrincipal != 5) {
             if (auxPrincipal == 0) {
                 if (unidadesAcessiveis.size() < 4) {
-                    aux = PedeCoisas.PerguntaNovaUnid();
                     while (aux == 0) {
                         String nomeUnid = PedeCoisas.PedeUnidade(unidadesAcessiveis);
                         ConectDB.insertCliente_Has_Unidade(cliente, UnidadeDB.researchUnidadeID(nomeUnid));
@@ -64,8 +62,10 @@ public class Main {
                     lojacompra = PedeCoisas.PedeUnidadeCompra(unidadesAcessiveis);
                     prodTemp = PedeCoisas.PedeProduto(lojacompra.getProdutos());
                     prodTemp.setQuantidade(PedeCoisas.PedeQuantidade(prodTemp));
-                    if(lojacompra.isTaxa()==true){
+                    if(lojacompra.isTaxa() && prodTemp.getValor() <=100){
                         prodTemp.setValor(prodTemp.getValor()+5);
+                    } else if (lojacompra.isTaxa()){
+                        prodTemp.setValor((prodTemp.getValor()*1.1f));
                     }
                     carrinho.add(prodTemp);
                     aux = PedeCoisas.PerguntaContComp();
@@ -90,8 +90,10 @@ public class Main {
             totalcompra += (produto.getValor() * produto.getQuantidade());
         }
         ProdDB.updateCarrinho(carrinho);
-        if(totalcompra <= 0){
+        if(totalcompra > 0){
             MostraCoisas.MostraTotal(totalcompra);
+        }else {
+            MostraCoisas.MsgObrigado();
         }
     }
 }

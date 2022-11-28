@@ -33,4 +33,8 @@ public class MostraCoisas {
     public static void MostraSAC(Unidade unidade){
         JOptionPane.showMessageDialog(null,"Email do SAC: "+unidade.getSac().getEmail()+"\nTelefone do SAC: "+unidade.getSac().getTelefone());
     }
+
+    public static void MsgObrigado() {
+        JOptionPane.showMessageDialog(null,"Obrigado pela preferencia !\nVolte sempre !");
+    }
 }

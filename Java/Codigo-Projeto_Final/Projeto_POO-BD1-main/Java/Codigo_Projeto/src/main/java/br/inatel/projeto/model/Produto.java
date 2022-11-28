@@ -68,9 +68,9 @@ public class Produto {
     @Override
     public String toString(){
         if(descricao != null) {
-            return nome + ": " + descricao;
+            return nome + ": " + descricao+" Valor unitario: "+valor;
         }else{
-            return nome;
+            return nome+" Valor unitario: "+valor;
         }
     }
 
