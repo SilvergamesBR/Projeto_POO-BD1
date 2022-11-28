@@ -75,7 +75,7 @@ public class PedeCoisas {
     public static int PerguntaPrincipal(){
         String aux;
         int i;
-        Object[] opcoes = {"Agregar Unidade","Realizar Compra","Atualizar Senha","Deletar Conta", "Finalizar Operacao"};
+        Object[] opcoes = {"Agregar Unidade","Realizar Compra","Atualizar Senha","Deletar Conta","Informacoes do SAC", "Finalizar Operacao"};
         aux = (String) JOptionPane.showInputDialog(null,"Selecione o que deseja fazer","Selecione",JOptionPane.PLAIN_MESSAGE,null,opcoes,"Masculino");
         for(i = 0; i < opcoes.length; i++){
             if(aux == opcoes[i]){
@@ -87,6 +87,10 @@ public class PedeCoisas {
 
     public static String PedeNovaSenha(){
         return JOptionPane.showInputDialog("Digite sua nova senha");
+    }
+
+    public static Unidade PedeUnidadeSAC(ArrayList<Unidade> unidades){
+        return (Unidade) JOptionPane.showInputDialog(null,"Selecione a unidade da qual voce quer as informacoes","Selecione",JOptionPane.PLAIN_MESSAGE,null,unidades.toArray(),"");
     }
 
 }

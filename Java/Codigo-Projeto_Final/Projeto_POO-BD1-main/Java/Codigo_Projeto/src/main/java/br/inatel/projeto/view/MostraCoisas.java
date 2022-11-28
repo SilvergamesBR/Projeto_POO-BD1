@@ -1,5 +1,7 @@
 package br.inatel.projeto.view;
 
+import br.inatel.projeto.model.Unidade;
+
 import javax.swing.*;
 
 public class MostraCoisas {
@@ -28,4 +30,7 @@ public class MostraCoisas {
         JOptionPane.showMessageDialog(null,"Conta Deletada !");
     }
 
+    public static void MostraSAC(Unidade unidade){
+        JOptionPane.showMessageDialog(null,"Email do SAC: "+unidade.getSac().getEmail()+"\nTelefone do SAC: "+unidade.getSac().getTelefone());
+    }
 }

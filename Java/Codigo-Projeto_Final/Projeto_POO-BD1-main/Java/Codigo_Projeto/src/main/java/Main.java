@@ -45,7 +45,7 @@ public class Main {
         unidadesAcessiveis = UnidadeDB.researchUnidade(cliente);
 
         auxPrincipal = PedeCoisas.PerguntaPrincipal();
-        while (auxPrincipal != 4) {
+        while (auxPrincipal != 5) {
             if (auxPrincipal == 0) {
                 if (unidadesAcessiveis.size() < 4) {
                     aux = PedeCoisas.PerguntaNovaUnid();
@@ -64,6 +64,9 @@ public class Main {
                     lojacompra = PedeCoisas.PedeUnidadeCompra(unidadesAcessiveis);
                     prodTemp = PedeCoisas.PedeProduto(lojacompra.getProdutos());
                     prodTemp.setQuantidade(PedeCoisas.PedeQuantidade(prodTemp));
+                    if(lojacompra.isTaxa()==true){
+                        prodTemp.setValor(prodTemp.getValor()+5);
+                    }
                     carrinho.add(prodTemp);
                     aux = PedeCoisas.PerguntaContComp();
                 }
@@ -76,6 +79,9 @@ public class Main {
                 ClienteDB.deleteCliente(cliente);
                 MostraCoisas.AvisoDeletado();
                 break;
+            }else if(auxPrincipal == 4){
+                lojacompra=PedeCoisas.PedeUnidadeSAC(unidadesAcessiveis);
+                MostraCoisas.MostraSAC(lojacompra);
             }
             auxPrincipal = PedeCoisas.PerguntaPrincipal();
         }
@@ -84,6 +90,8 @@ public class Main {
             totalcompra += (produto.getValor() * produto.getQuantidade());
         }
         ProdDB.updateCarrinho(carrinho);
-        MostraCoisas.MostraTotal(totalcompra);
+        if(totalcompra <= 0){
+            MostraCoisas.MostraTotal(totalcompra);
+        }
     }
 }
