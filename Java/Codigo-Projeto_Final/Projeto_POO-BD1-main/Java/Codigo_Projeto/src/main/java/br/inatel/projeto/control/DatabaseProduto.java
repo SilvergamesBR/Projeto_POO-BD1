@@ -1,3 +1,4 @@
+
 package br.inatel.projeto.control;
 
 import br.inatel.projeto.model.Cliente;
@@ -8,6 +9,12 @@ import br.inatel.projeto.model.Unidade;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Classe de Database que conecta com o banco de dados do Produto
+ * @author Eduardo Karpfenstein, Lucas Fajardo de Mello
+ * @version 1.0 - Finalizado
+ * @since 27/11/22
+ */
 public class DatabaseProduto {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
@@ -22,6 +29,9 @@ public class DatabaseProduto {
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
     private boolean check = false;
 
+    /**
+     * Funcao que conecta ao Banco de Dados
+     */
     public void connect(){
 
         try{
@@ -31,6 +41,10 @@ public class DatabaseProduto {
         }
     }
     //buscando o SAC ligado a loja
+    /**
+     * Funcao que busca um novo registro
+     * @return registro pesquisado
+     */
     public ArrayList<Produto> researchProduto(Unidade unidade){
         connect();
         ArrayList<Produto> produtos = new ArrayList<Produto>();
@@ -58,7 +72,10 @@ public class DatabaseProduto {
         }
         return produtos;
     }
-
+    /**
+     * Funcao que atualiza um novo registro
+     * @return checagem de conxecao
+     */
     public boolean updateCarrinho(ArrayList<Produto> carrinho) {
         for (Produto produto : carrinho) {
             connect();

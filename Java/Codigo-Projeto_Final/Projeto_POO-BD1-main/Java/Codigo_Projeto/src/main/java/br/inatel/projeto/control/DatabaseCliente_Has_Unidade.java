@@ -1,3 +1,4 @@
+
 package br.inatel.projeto.control;
 
 import br.inatel.projeto.model.Cliente;
@@ -6,6 +7,12 @@ import br.inatel.projeto.model.Unidade;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Classe de Database que conecta com o banco de dados do Cliente com a Unidade
+ * @author Eduardo Karpfenstein, Lucas Fajardo de Mello
+ * @version 1.0 - Finalizado
+ * @since 27/11/22
+ */
 public class DatabaseCliente_Has_Unidade {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
@@ -20,6 +27,9 @@ public class DatabaseCliente_Has_Unidade {
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
     private boolean check = false;
 
+    /**
+     * Funcao que conecta ao Banco de Dados
+     */
     public void connect(){
 
         try{
@@ -29,6 +39,10 @@ public class DatabaseCliente_Has_Unidade {
         }
     }
     //inserindo uma nova loja para o cliente
+    /**
+     * Funcao que insere um novo registro
+     * @return checagem de conxecao
+     */
     public boolean insertCliente_Has_Unidade(Cliente cliente,int ID){
         connect();
         String sql = "INSERT INTO Cliente_has_Unidade(Cliente_CPF,Unidade_idUnidade) VALUES (?,?)";
@@ -53,6 +67,10 @@ public class DatabaseCliente_Has_Unidade {
         return check;
     }
     //--------------------EXCLUINDO REGISTRO--------------------
+    /**
+     * Funcao que exclui um novo registro
+     * @return checagem de conxecao
+     */
     public boolean deleteCliente_has_Unidade(Cliente cliente,int ID){
         connect();
         String sql = "DELETE FROM Cliente_has_Unidade WHERE Cliente_CPF = ? AND Unidade_idUnidade = ?";

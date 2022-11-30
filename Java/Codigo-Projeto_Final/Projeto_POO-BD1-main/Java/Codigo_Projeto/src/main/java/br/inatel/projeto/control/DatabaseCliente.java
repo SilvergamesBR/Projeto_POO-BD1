@@ -1,9 +1,16 @@
+
 package br.inatel.projeto.control;
 
 import br.inatel.projeto.model.Cliente;
 
 import java.sql.*;
 
+/**
+ * Classe de Database que conecta com o banco de dados do Cliente
+ * @author Eduardo Karpfenstein, Lucas Fajardo de Mello
+ * @version 1.0 - Finalizado
+ * @since 27/11/22
+ */
 public class DatabaseCliente {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
@@ -18,6 +25,9 @@ public class DatabaseCliente {
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
     private boolean check = false;
 
+    /**
+     * Funcao que conecta ao Banco de Dados
+     */
     public void connect(){
 
         try{
@@ -28,6 +38,10 @@ public class DatabaseCliente {
     }
 
     //--------------------INSERINDO NOVO REGISTRO--------------------
+    /**
+     * Funcao que insere um novo registro
+     * @return checagem de conxecao
+     */
     public boolean insertCliente(Cliente cliente){
         connect();
         String sql = "INSERT INTO Cliente(CPF,Nome,Genero,Senha) VALUES (?,?,?,?)";
@@ -38,8 +52,6 @@ public class DatabaseCliente {
             pst.setString(3,cliente.getGenero());// concatena genero no terceiro ? do comando
             pst.setString(4,cliente.getSenha());// concatena Senha no quarta ? do comando
             pst.execute();
-            String dados_c = cliente.converteInfo();
-            FileManager.writeTxt("br/inatel/projeto/view/"+cliente.getNome()+".txt",dados_c);
             check = true;
         }catch (SQLException e){
             System.out.println("Erro de conexão: " + e.getMessage());
@@ -57,6 +69,10 @@ public class DatabaseCliente {
     }
 
     //--------------------BUSCANDO NOVO REGISTRO--------------------
+    /**
+     * Funcao que busca um novo registro
+     * @return registro pesquisado
+     */
     public Cliente researchCliente(String CPF,String Senha){
         connect();
         Cliente cliente = null;
@@ -85,6 +101,10 @@ public class DatabaseCliente {
     }
 
     //--------------------ATUALIZANDO SENHA DO REGISTRO--------------------
+    /**
+     * Funcao que atualiza um novo registro
+     * @return checagem de conxecao
+     */
     public boolean updateCliente(Cliente cliente,String senha){
         connect();
         String sql = "UPDATE Cliente SET Senha=? WHERE CPF=?";
@@ -110,6 +130,10 @@ public class DatabaseCliente {
         return check;
     }
     //--------------------EXCLUINDO REGISTRO--------------------
+    /**
+     * Funcao que exclui um novo registro
+     * @return checagem de conxecao
+     */
     public boolean deleteCliente(Cliente cliente){
         connect();
         String sql = "DELETE FROM Cliente WHERE CPF =? AND Senha =?";

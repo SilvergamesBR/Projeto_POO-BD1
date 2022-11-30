@@ -1,3 +1,4 @@
+
 import br.inatel.projeto.control.DatabaseCliente;
 import br.inatel.projeto.control.DatabaseCliente_Has_Unidade;
 import br.inatel.projeto.control.DatabaseProduto;
@@ -10,6 +11,13 @@ import br.inatel.projeto.view.PedeCoisas;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Principal da aplicacacao onde as implementacoes
+ * logicas sao realizadas
+ * @author Eduardo Karpfenstein, Lucas Fajardo de Mello
+ * @version 1.0 - Finalizado
+ * @since 27/11/22
+ */
 public class Main {
     public static void main(String[] args) {
         int aux = 0;
@@ -76,9 +84,12 @@ public class Main {
                 MostraCoisas.AvisoSenha();
             }
             else if (auxPrincipal == 3){
-                ClienteDB.deleteCliente(cliente);
-                MostraCoisas.AvisoDeletado();
-                break;
+                aux = PedeCoisas.PerguntaDelete();
+                if(aux == 0) {
+                    ClienteDB.deleteCliente(cliente);
+                    MostraCoisas.AvisoDeletado();
+                    break;
+                }
             }else if(auxPrincipal == 4){
                 lojacompra=PedeCoisas.PedeUnidadeSAC(unidadesAcessiveis);
                 MostraCoisas.MostraSAC(lojacompra);

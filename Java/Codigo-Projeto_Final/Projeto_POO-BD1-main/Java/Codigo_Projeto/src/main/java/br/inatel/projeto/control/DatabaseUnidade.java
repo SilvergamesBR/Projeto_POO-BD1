@@ -1,3 +1,4 @@
+
 package br.inatel.projeto.control;
 import br.inatel.projeto.model.Cliente;
 import br.inatel.projeto.model.Unidade;
@@ -5,6 +6,12 @@ import br.inatel.projeto.model.Unidade;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Classe de Database que conecta com o banco de dados da Unidade
+ * @author Eduardo Karpfenstein, Lucas Fajardo de Mello
+ * @version 1.0 - Finalizado
+ * @since 27/11/22
+ */
 public class DatabaseUnidade {
     Connection connection; // objeto responsável por fazer a conexão com mysql
     Statement statement; // objeto responsável por preparar consultas "SELECT"
@@ -19,6 +26,9 @@ public class DatabaseUnidade {
     static final String url = "jdbc:mysql://localhost:3306/" + database + "?useTimezone=true&serverTimezone=UTC&useSSL=false";
     private boolean check = false;
 
+    /**
+     * Funcao que conecta ao Banco de Dados
+     */
     public void connect(){
 
         try{
@@ -28,6 +38,10 @@ public class DatabaseUnidade {
         }
     }
     //--------------------BUSCANDO NOVO REGISTRO--------------------
+    /**
+     * Funcao que busca um novo registro do Cliente
+     * @return registro pesquisado
+     */
     public ArrayList<Unidade> researchUnidade(Cliente cliente){
         connect();
         ArrayList<Unidade> unidades = new ArrayList<Unidade>();
@@ -55,6 +69,10 @@ public class DatabaseUnidade {
         }
         return unidades;
     }
+    /**
+     * Funcao que busca um novo registro da Localizacao
+     * @return registro pesquisado
+     */
     public int researchUnidadeID(String localizacao){
         connect();
         int ID = 0;
