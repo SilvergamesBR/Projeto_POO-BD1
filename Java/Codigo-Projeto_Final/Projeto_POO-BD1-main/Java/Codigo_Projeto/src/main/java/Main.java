@@ -1,4 +1,3 @@
-
 import br.inatel.projeto.control.DatabaseCliente;
 import br.inatel.projeto.control.DatabaseCliente_Has_Unidade;
 import br.inatel.projeto.control.DatabaseProduto;
@@ -55,6 +54,7 @@ public class Main {
         while (auxPrincipal != 5) {
             if (auxPrincipal == 0) {
                 if (unidadesAcessiveis.size() < 4) {
+                    aux=0;
                     while (aux == 0) {
                         String nomeUnid = PedeCoisas.PedeUnidade(unidadesAcessiveis);
                         ConectDB.insertCliente_Has_Unidade(cliente, UnidadeDB.researchUnidadeID(nomeUnid));
